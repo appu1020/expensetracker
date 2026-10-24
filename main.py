@@ -17,9 +17,33 @@ expense2 = {
 }
 
 def add_expense():
-    name = input("Enter expense name: ")
-    amount = float(input("Enter expense amount: "))
-    category = input("Enter expense category: ")
+    while True:
+        name = input("Enter expense name: ").strip()
+        if not name:
+            print("Expense name cannot be empty. Please enter a valid name.")
+            continue
+        break
+
+    while True:
+        try:
+            amount = float(input("Enter expense amount: "))
+
+            if amount <= 0:
+                print("Amount cannot be negative. Please enter a valid amount.")
+                continue
+            
+            break
+        except ValueError:
+            print("Invalid amount. Please enter a valid number.")
+
+
+    while True:
+        category = input("Enter expense category: ").strip()
+        if not category:
+            print("Expense category cannot be empty. Please enter a valid category.")
+            continue
+        break
+
     expense3 = {
         "name": name,
         "amount": amount,
@@ -73,10 +97,20 @@ for category, total in category_total.items():
 
 
 def show_all_expenses():
-    for expense in expenses:
-        print(f"Name: {expense['name']}, Amount: {expense['amount']}, Category: {expense['category']}")
+    for i, expense in enumerate(expenses, start=1):
+        print(f"{i}. Name: {expense['name']}, Amount: {expense['amount']}, Category: {expense['category']}")
     return expenses
+
+def delete_expense():
+    show_all_expenses()
+    index = int(input("Enter the index of the expense to delete: "))-1
+    if index <= 0:
+        print("Invalid index. Please enter a valid index.")
+    else:
+        deleted_expense = expenses.pop(index)
+        print(f"Deleted expense: {deleted_expense['name']}, Amount: {deleted_expense['amount']}, Category: {deleted_expense['category']}")
 all_expense = show_all_expenses()
+
 
 while True:
     print("1. Add expense")
